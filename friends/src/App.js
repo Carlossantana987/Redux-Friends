@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import { Route, Link } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
+import FriendsList from "./components/FriendsList";
 import LoginPage from "./components/LoginPage";
 
 function App() {
@@ -13,7 +15,8 @@ function App() {
         </button>
       </div>
 
-      <Route exact path="/LoginPage" component={LoginPage} />
+      <Route path="/LoginPage" component={LoginPage} />
+      <PrivateRoute exact path="/FriendsList" component={FriendsList} />
     </React.Fragment>
   );
 }

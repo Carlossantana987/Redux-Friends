@@ -42,12 +42,7 @@ class LoginPage extends React.Component {
   }
 }
 
-const mstp = state => ({
-  loggingIn: state.loggingIn,
-  error: state.error
-});
-
 export default connect(
-  mstp,
+  null,
   { loginStart }
 )(LoginPage);
