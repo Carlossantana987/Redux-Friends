@@ -1,23 +1,26 @@
 import React from "react";
-import "./App.css";
-import { Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import Login from "./components/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
-import FriendsList from "./components/FriendsList";
-import LoginPage from "./components/LoginPage";
+import Friends from "./components/Friends";
 
 function App() {
   return (
-    <React.Fragment>
+    <Router>
       <div className="App">
-        Welcome To your Friends
-        <button>
-          <Link to="/LoginPage">Login to begin</Link>
-        </button>
+        <ul>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/protected">Protected Page</Link>
+          </li>
+        </ul>
+        <Route path="/login" component={Login} />
+        <PrivateRoute exact path="/protected" component={Friends} />
       </div>
-
-      <Route path="/LoginPage" component={LoginPage} />
-      <PrivateRoute exact path="/FriendsList" component={FriendsList} />
-    </React.Fragment>
+    </Router>
   );
 }
 

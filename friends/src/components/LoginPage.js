@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { loginStart } from "../actions";
+// import Loader from 'react-loader-spinner';
 
-class LoginPage extends React.Component {
+import { login } from "../actions";
+
+class Login extends React.Component {
   state = {
-    credentials: { username: "", password: "" }
-  };
-
-  handleLogin = e => {
-    e.preventDefault();
-    this.props.loginStart(this.state.credentials);
+    credentials: {
+      username: "",
+      password: ""
+    }
   };
 
   handleChange = e => {
@@ -21,28 +21,44 @@ class LoginPage extends React.Component {
     });
   };
 
+  login = e => {
+    e.preventDefault();
+    this.props.login(this.state.credentials).then(res => {
+      if (res) {
+        this.props.history.push("/protected");
+      }
+    });
+  };
+
   render() {
     return (
-      <form onSubmit={this.handleLogin}>
-        <input
-          placeholder="UserName"
-          name="username"
-          value={this.state.credentials.usermage}
-          onChange={this.handleChange}
-        />
-        <input
-          placeholder="Password"
-          name="password"
-          value={this.state.credentials.password}
-          onChange={this.handleChange}
-        />
-        <button onSubmit={this.handleLogin}>Submit</button>
-      </form>
+      <div>
+        <form onSubmit={this.login}>
+          <input
+            type="text"
+            name="username"
+            value={this.state.credentials.username}
+            onChange={this.handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            value={this.state.credentials.password}
+            onChange={this.handleChange}
+          />
+          <button>{this.props.loggingIn ? <h2>loading</h2> : "Log in"}</button>
+        </form>
+      </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  error: state.error,
+  loggingIn: state.loggingIn
+});
+
 export default connect(
-  null,
-  { loginStart }
-)(LoginPage);
+  mapStateToProps,
+  { login }
+)(Login);
